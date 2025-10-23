@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bộ đếm lượt nhấp</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #counter {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="counter">0</h1>
+    <button id="clickButton">Nhấn vào tôi</button>
+
+    <script>
+        const counterElement = document.getElementById('counter');
+        const clickButton = document.getElementById('clickButton');
+
+        // Fetch the initial count from the server
+        fetch('/api/counter')
+            .then(response => response.json())
+            .then(data => {
+                counterElement.textContent = data.count;
+            });
+
+        clickButton.addEventListener('click', () => {
+            // Increment the count on the server
+            fetch('/api/counter/increment', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    counterElement.textContent = data.count;
+                });
+        });
+    </script>
+
+</body>
+</html>
