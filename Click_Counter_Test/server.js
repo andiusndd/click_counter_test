@@ -17,6 +17,7 @@ app.get('/api/counter', async (req, res) => {
         }
         res.json({ count });
     } catch (error) {
+        console.error('Error reading from Vercel KV:', error);
         res.status(500).json({ error: 'Error reading count from Vercel KV' });
     }
 });
@@ -27,6 +28,7 @@ app.post('/api/counter/increment', async (req, res) => {
         const count = await kv.incr('count');
         res.json({ count });
     } catch (error) {
+        console.error('Error updating Vercel KV:', error);
         res.status(500).json({ error: 'Error updating count in Vercel KV' });
     }
 });
